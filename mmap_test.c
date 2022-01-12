@@ -48,6 +48,7 @@ int main(int argc, char const *argv[])
         printf(1,"%s\n", j);
 
         close(fd);
+        exit();
     }
 
     pid_power_2 = fork();
@@ -84,6 +85,7 @@ int main(int argc, char const *argv[])
 
         close(fd);
         printf(1,"%s\n", j);
+        exit();
     }
 
     pid_power_3 = fork();
@@ -120,9 +122,13 @@ int main(int argc, char const *argv[])
 
         close(fd);
         printf(1,"%s\n", j);
+        exit();
     }
 
     // while (1);
+    for(int i=0;i<3;i++){
+        wait();
+    }
 
     return 0;
 }

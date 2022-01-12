@@ -113,3 +113,9 @@ get_free_pages_count(void)
   return count;
 }
 
+void*
+mmap(void *addr, int length, int prot, int flags, int fd, int offset){
+  if(!addr){
+
+  }
+}

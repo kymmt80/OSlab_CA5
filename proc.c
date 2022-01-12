@@ -532,3 +532,17 @@ procdump(void)
     cprintf("\n");
   }
 }
+
+mmap(void *addr, int length, int prot, int flags, int fd, int offset){
+
+  struct proc *p = myproc();
+  p->mmaps[p->lastmap_i].start = addr;
+  p->mmaps[p->lastmap_i].fd = fd;
+  p->mmaps[p->lastmap_i].length = length;
+  p->mmaps[p->lastmap_i].prot = prot;
+  p->mmaps[p->lastmap_i].file = p->ofile[fd];
+  p->lastmap_i++;
+  filedup(p->mmaps[p->lastmap_i].file);
+
+
+}

@@ -89,3 +89,21 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+int
+sys_mmap(void)
+{
+  void* addr=0;
+  int length, offset, prot, flags, fd;
+
+  argptr(0, addr, sizeof(void*));
+  argint(1, (int*)&length);
+  argint(2, (int*)&prot);
+  argint(3, (int*)&flags);
+  argint(4, (int*)&fd);
+  argint(5, (int*)&offset);
+
+  mmap(addr,length,prot,flags,fd,offset);
+  return 0;
+
+}

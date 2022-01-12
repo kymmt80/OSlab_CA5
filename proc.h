@@ -10,6 +10,14 @@ struct cpu {
   struct proc *proc;           // The process running on this cpu or null
 };
 
+struct mmap_data {
+  char* start;
+  int length;
+  int fd;
+  int prot;
+  struct file* file;
+};
+
 extern struct cpu cpus[NCPU];
 extern int ncpu;
 
@@ -48,7 +56,9 @@ struct proc {
   int killed;                  // If non-zero, have been killed
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
-  char name[16];               // Process name (debugging)
+  char name[16];
+  struct mmap_data mmaps[10];  
+  int lastmap_i;             // Process name (debugging)
 };
 
 // Process memory is laid out contiguously, low addresses first:

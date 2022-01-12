@@ -536,7 +536,6 @@ procdump(void)
 
 void*
 mmap(void *addr, int length, int prot, int flags, int fd, int offset){
-
   struct proc *p = myproc();
   p->mmaps[p->lastmap_i].start = p->page_start;
   p->page_start+=length;

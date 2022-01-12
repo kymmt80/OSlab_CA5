@@ -58,6 +58,7 @@ struct proc {
   struct inode *cwd;           // Current directory
   char name[16];
   struct mmap_data mmaps[10];  
+  char* page_start;
   int lastmap_i;             // Process name (debugging)
 };
 

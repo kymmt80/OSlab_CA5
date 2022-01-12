@@ -138,6 +138,7 @@ userinit(void)
   p->tf->eflags = FL_IF;
   p->tf->esp = PGSIZE;
   p->tf->eip = 0;  // beginning of initcode.S
+  p->page_start = (char*) 0x40000000;
 
   safestrcpy(p->name, "initcode", sizeof(p->name));
   p->cwd = namei("/");
@@ -533,16 +534,18 @@ procdump(void)
   }
 }
 
+void*
 mmap(void *addr, int length, int prot, int flags, int fd, int offset){
 
   struct proc *p = myproc();
-  p->mmaps[p->lastmap_i].start = addr;
+  p->mmaps[p->lastmap_i].start = p->page_start;
+  p->page_start+=length;
   p->mmaps[p->lastmap_i].fd = fd;
   p->mmaps[p->lastmap_i].length = length;
   p->mmaps[p->lastmap_i].prot = prot;
   p->mmaps[p->lastmap_i].file = p->ofile[fd];
   p->lastmap_i++;
   filedup(p->mmaps[p->lastmap_i].file);
-
+  return (void*)p->mmaps[p->lastmap_i].start;
 
 }
